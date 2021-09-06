@@ -9,16 +9,22 @@ import java.util.*;
 @Setter
 @ToString
 public class LiveSelect<T> extends JComponent {
-    private List<T> data;
+    private List<T>    data;
+    private int        columns;
+    private int        maxCharacters;
+
+    @Setter(AccessLevel.NONE)
+    @ToString.Exclude
     private JTextField textField;
-    private int columns;
-    private int maxCharacters;
+
+    public LiveSelect() {
+    }
 
     public LiveSelect(List<T> data) {
         this.data = Objects.requireNonNull(data);
     }
 
-    public JTextField getTextField() {
+    private JTextField getTextField() {
         if (textField == null) {
             textField = new JTextField();
             if (columns > 0) textField.setColumns(columns);
@@ -31,4 +37,7 @@ public class LiveSelect<T> extends JComponent {
         this.data = Objects.requireNonNull(data);
     }
 
+    public String getText() {
+        return getTextField().getText();
+    }
 }
