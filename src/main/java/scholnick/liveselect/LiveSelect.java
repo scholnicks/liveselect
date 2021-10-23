@@ -3,6 +3,7 @@ package scholnick.liveselect;
 import lombok.*;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.BorderLayout;
 import java.awt.event.*;
 import java.util.*;
@@ -16,7 +17,7 @@ import java.util.*;
 @Getter
 @Setter
 @ToString
-public class LiveSelect<T> extends JComponent {
+public class LiveSelect<T> extends JTextComponent {
     private List<T>    data;
     private int        columns;
     private int        maxCharacters;
@@ -40,10 +41,10 @@ public class LiveSelect<T> extends JComponent {
     private JTextField getTextField() {
         if (textField == null) {
             textField = new JTextField();
-            textField.setEditable(false);
+            textField.setEditable(true);
             textField.setEnabled(true);
             if (columns > 0) textField.setColumns(columns);
-            if (maxCharacters > 0) textField.setDocument(new LimitedStyledDocument(maxCharacters));
+//            if (maxCharacters > 0) textField.setDocument(new LimitedStyledDocument(maxCharacters));
 
             textField.addMouseListener(new MouseAdapter() {
                 @Override public void mouseClicked(MouseEvent e) {
@@ -54,29 +55,15 @@ public class LiveSelect<T> extends JComponent {
         return textField;
     }
 
-    private JDialog popup() {
-        if (popup == null) {
-            popup = new JDialog();
+    private void popup() {
+//        if (popup == null) {
+            JDialog popup = new JDialog();
             popup.setLayout(new BorderLayout());
             popup.add(new JTextField(),BorderLayout.NORTH);
             popup.add(new JComboBox<T>(new Vector<>(data)),BorderLayout.CENTER);
-        }
-        return popup;
+            popup.setVisible(true);
+//        }
     }
-
-
-//    private void popUpMenu() {
-//        JPopupMenu popup = new JPopupMenu();
-//        data.forEach(d -> {
-//            JMenuItem item = new JMenuItem(d.toString());
-////            item.addActionListener(l -> createAuthorLabel(d,dataPanel,inputField,true));
-//            popup.add(item);
-//        });
-//        popup.pack();
-//        popup.show(getTextField(), 0, getTextField().getHeight());
-//        popup.requestFocusInWindow();
-//    }
-
 
     public void setData(List<T> data) {
         this.data = Objects.requireNonNull(data);
@@ -92,5 +79,10 @@ public class LiveSelect<T> extends JComponent {
 
     public void setEnabled(boolean b) {
         getTextField().setEnabled(b);
+    }
+
+    @Override
+    public String getUIClassID() {
+        return getTextField().getUIClassID();
     }
 }

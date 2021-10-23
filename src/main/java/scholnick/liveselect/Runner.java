@@ -30,7 +30,7 @@ public class Runner extends JFrame {
 
         JPanel content = (JPanel) getContentPane();
         content.setLayout(new BorderLayout());
-        content.add(new LiveSelect<>(List.of("Waters", "Gilmour", "Mason", "Wright")));
+        content.add(new LiveSelect<>(List.of("Waters", "Gilmour", "Mason", "Wright")),BorderLayout.NORTH);
 
         setVisible(true);
     }

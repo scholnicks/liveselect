@@ -3,4 +3,5 @@ build
 *.bat
 bin
 .vscode
+out
 
